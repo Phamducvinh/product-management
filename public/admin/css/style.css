@@ -1,0 +1,95 @@
+/* Header */
+.header {
+    padding: 15px 20px; /* Thêm padding cho header để thoáng hơn */
+    background: #333;
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Bóng đổ nhẹ để tạo chiều sâu */
+}
+
+.header .inner-logo a {
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none; /* Loại bỏ gạch chân cho link */
+    transition: color 0.3s ease; /* Hiệu ứng chuyển đổi màu khi hover */
+}
+
+.header .inner-logo a:hover {
+    color: #ffc107; /* Màu vàng khi hover để tạo điểm nhấn */
+}
+
+/* Body */
+.body .sider {
+    width: 200px; /* Mở rộng sider để dễ đọc hơn */
+    background: #2e2e2e; /* Màu tối hơn để phân biệt với nội dung chính */
+    color: #fff;
+    position: fixed;
+    top: 56px; /* Tránh header */
+    left: 0;
+    height: calc(100vh - 56px);
+    padding: 20px; /* Thêm khoảng cách cho nội dung sider */
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1); /* Bóng đổ bên phải của sider */
+    overflow-y: auto; /* Cho phép sider cuộn nếu quá dài */
+}
+
+.body .sider a {
+    display: block;
+    padding: 10px 0;
+    color: #fff;
+    text-decoration: none;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+.body .sider a:hover {
+    background: #444; /* Thay đổi màu nền khi hover */
+    color: #ffc107; /* Màu vàng khi hover */
+}
+
+.body .main {
+    margin: 20px; /* Thêm khoảng cách cho nội dung */
+    position: relative;
+    left: 200px; /* Căn trái nội dung theo chiều rộng của sider */
+    width: calc(100% - 220px); /* Điều chỉnh lại độ rộng */
+    padding: 20px; /* Thêm padding cho nội dung chính */
+    background: #f8f9fa; /* Màu nền sáng hơn cho nội dung chính */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Bóng đổ nhẹ cho khối nội dung */
+    min-height: calc(100vh - 56px); /* Đảm bảo nội dung có chiều cao tối thiểu */
+    box-sizing: border-box;
+}
+
+.sider .inner-menu ul {
+    list-style: none; /* Loại bỏ dấu chấm tròn */
+    padding: 0;
+    margin: 0;
+}
+
+.sider .inner-menu ul li {
+    margin-bottom: 10px; /* Khoảng cách giữa các mục menu */
+
+}
+.sider .inner-menu ul li a {
+    color: #fff;
+    display: block;
+    padding: 6px 10px;
+    border-bottom: 1px solid #515151;
+    text-decoration: none;
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .body .sider {
+        width: 100%; /* Sider chiếm toàn bộ chiều rộng trên màn hình nhỏ */
+        height: auto; /* Chiều cao tự động */
+        position: relative; /* Không cố định vị trí */
+    }
+
+    .body .main {
+        left: 0;
+        width: 100%; /* Nội dung chính chiếm hết chiều rộng */
+        margin-left: 0; /* Bỏ khoảng cách với sider */
+    }
+}
