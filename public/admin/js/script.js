@@ -57,3 +57,86 @@ if(buttonPagination){
     });
 }
 // end phân trang
+
+// check box
+const checkboxMulti = document.querySelector("[checkbox-multi");
+if(checkboxMulti){
+    const inputCheckAll = document.querySelector("input[name='checkall']");
+    const inputsId = checkboxMulti.querySelectorAll("input[name='id']");
+
+    inputCheckAll.addEventListener("click", () => {
+        inputsId.forEach(input => {
+            input.checked = inputCheckAll.checked;
+        });
+        // if(inputCheckAll.checked){
+        //     inputsId.forEach(input => {
+        //         input.checked = true;
+        //     });
+        // }else{
+        //     inputsId.forEach(input => {
+        //         input.checked = false;
+        //     });
+        // }
+    });
+
+    // cách 1
+    // inputsId.forEach(input => {
+    //     input.addEventListener("click", () => {
+    //         let check = true;
+    //         inputsId.forEach(input => {
+    //             if(!input.checked){
+    //                 check = false;
+    //             }
+    //         });
+
+    //         inputCheckAll.checked = check;
+    //     });
+    // });
+
+    // cách 2
+    inputsId.forEach(input => {
+        input.addEventListener("click", () => {
+            const countChecked = checkboxMulti.querySelectorAll("input[name='id']:checked").length;
+
+            // inputCheckAll.checked = countChecked == inputsId.length;
+
+            if(countChecked == inputsId.length){
+                inputCheckAll.checked = true;
+            }else{
+                inputCheckAll.checked = false;
+            }
+        
+        })
+    })
+}
+// end check box
+
+// Form change Multi
+const formChangeMulti = document.querySelector("[form-change-multi]");
+if(formChangeMulti){
+    formChangeMulti.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const checkboxMulti = document.querySelector("[checkbox-multi]");
+        const inputsChecked = checkboxMulti.querySelectorAll(
+            "input[name='id']:checked"
+        );
+        if(inputsChecked.length > 0){
+            let ids = [];
+            const inputIds = formChangeMulti.querySelector("input[name='ids']");
+    
+            inputsChecked.forEach(input => {
+                const id = input.value;
+                ids.push(id);
+            });
+
+            inputIds.value = ids.join(",");
+            formChangeMulti.submit();
+    
+        }else{
+            alert("Vui lòng chọn ít nhất 1 sản phẩm");
+        }
+    });
+
+}
+// end Form change Multi
