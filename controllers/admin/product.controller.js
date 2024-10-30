@@ -6,90 +6,106 @@ const paginationHelper = require("../../helpers/pagination");
 
 // [get] // admin/products
 module.exports.index = async (req, res) => {
-    // console.log(req.query.status);
+  // console.log(req.query.status);
 
-    const filterStatus = filterStatusHelper(req.query);
-    // console.log(filterStatus);
+  const filterStatus = filterStatusHelper(req.query);
+  // console.log(filterStatus);
 
-    let find = {
-        deleted: false
-    };
-    if(req.query.status){
-        find.status = req.query.status;
-    }
+  let find = {
+    deleted: false,
+  };
+  if (req.query.status) {
+    find.status = req.query.status;
+  }
 
-    // ô tìm kiếm
+  // ô tìm kiếm
 
-    const objectSearch = searchHelper(req.query);
-    // console.log(objectSearch);
-   
-    if(objectSearch.keywordRegex){
-        find.title = objectSearch.keywordRegex;
-    }
+  const objectSearch = searchHelper(req.query);
+  // console.log(objectSearch);
 
-    // phân trang
-    const countProducts = await Product.countDocuments(find);
-    let obejctPagination = paginationHelper(
-        {
-        currentPage: parseInt(req.query.page) || 1,
-        limitItem: 4,
-        },
-        req.query,
-        countProducts
-    );
+  if (objectSearch.keywordRegex) {
+    find.title = objectSearch.keywordRegex;
+  }
 
-    
-    // end phân trang
+  // phân trang
+  const countProducts = await Product.countDocuments(find);
+  let obejctPagination = paginationHelper(
+    {
+      currentPage: parseInt(req.query.page) || 1,
+      limitItem: 4,
+    },
+    req.query,
+    countProducts
+  );
 
-    const products = await Product.find(find).limit(obejctPagination.limitItem).skip(obejctPagination.skip);    
-    // console.log(products);
+  // end phân trang
 
-    res.render("admin/pages/products/index", {
-        pageTitle: "Quản lý sản phẩm",
-        products: products,
-        filterStatus: filterStatus,
-        keyword: objectSearch.keyword,
-        pagination: obejctPagination
-    });
-    
-}
+  const products = await Product.find(find)
+    .limit(obejctPagination.limitItem)
+    .skip(obejctPagination.skip);
+  // console.log(products);
+
+  res.render("admin/pages/products/index", {
+    pageTitle: "Quản lý sản phẩm",
+    products: products,
+    filterStatus: filterStatus,
+    keyword: objectSearch.keyword,
+    pagination: obejctPagination,
+  });
+};
 
 // [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
-    const id = req.params.id;
-    const status = req.params.status;
+  const id = req.params.id;
+  const status = req.params.status;
 
-    await Product.updateOne({_id: id}, {status: status});
+  await Product.updateOne({ _id: id }, { status: status });
 
-    res.redirect("back");
-}
+  res.redirect("back");
+};
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-    const type = req.body.type;
-    const ids = req.body.ids.split(",");
+  const type = req.body.type;
+  const ids = req.body.ids.split(",");
 
-    switch (type) {
-        case "active":
-            await Product.updateMany({_id: {$in: ids}}, {status: "active"});
-            break;
-        
-        case "inactive":
-            await Product.updateMany({_id: {$in: ids}}, {status: "inactive"});
-    
-        default:
-            break;
-    }
+  switch (type) {
+    case "active":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "active" });
+      break;
 
-    res.redirect("back");
-}
+    case "inactive":
+      await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" });
+
+    case "delete-all":
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        {
+          deleted: true,
+          deletedAt: new Date(),
+        }
+      );
+      break;
+
+    default:
+      break;
+  }
+
+  res.redirect("back");
+};
 
 // [DELETE] /admin/products/delete/:id
 module.exports.deleteItem = async (req, res) => {
-    const id = req.params.id;
+  const id = req.params.id;
 
-    await Product.deleteOne({_id: id}); // xóa vĩnh viễn
-    // await Product.updateOne({_id: id}, {deleted: true}); // đánh dấu xóa
+  //await Product.deleteOne({_id: id}); // xóa vĩnh viễn
+  await Product.updateOne(
+    { _id: id },
+    {
+      deleted: true,
+      deletedAt: Date.now(),
+    }
+  ); // đánh dấu xóa
 
-    res.redirect("back");
-}
+  res.redirect("back");
+};
