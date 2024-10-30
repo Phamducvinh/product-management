@@ -40,6 +40,7 @@ block content
                         th Tên sản phẩm
                         th Ảnh sản phẩm
                         th Giá sản phẩm
+                        th Vị trí
                         th Trạng thái
                         th Hành động
                 tbody
@@ -62,6 +63,14 @@ block content
                                     height="auto"
                                 )
                             td #{item.price}$
+                            td 
+                                input(
+                                    type="number"
+                                    value=item.position
+                                    style="width: 50px"
+                                    min="1"
+                                    name="position"
+                                )
                             td 
                                 if(item.status == "active")
                                     a(
