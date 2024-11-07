@@ -99,7 +99,10 @@ block content
                                         class="badge badge-danger"
                                     ) Hết hàng
                             td
-                                button(class="btn btn-warning btn-sm") Sửa
+                                a(
+                                    href=`${prefixAdmin}/products/edit/${item.id}`
+                                    class="btn btn-warning btn-sm"
+                                ) Sửa
                                 button(
                                     class="btn btn-danger btn-sm"
                                     button-delete
