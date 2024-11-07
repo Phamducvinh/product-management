@@ -63,7 +63,7 @@ block content
                 placeholder="Nhập số lượng sản phẩm"
             )
 
-        div(class="form-group")
+        div(class="form-group" upload-image)
             label(for="thumbnail") Ảnh sản phẩm
             input(
                 type="file"
@@ -71,7 +71,21 @@ block content
                 id="thumbnail"
                 name="thumbnail"
                 accept="image/*"
+                upload-image-input
             )
+            div(class="image-container")
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+                button(
+                    type="button"
+                    class="delete-image-preview"
+                    delete-image-preview
+                ) X
+            
+
         div(class="form-group")
             label(for="position") Vị trí
             input(

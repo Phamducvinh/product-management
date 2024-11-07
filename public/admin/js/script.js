@@ -175,3 +175,32 @@ if(showAlert){
     });
 }
 // end show alert
+
+// upload images
+const uploadImage = document.querySelector("[upload-image]");
+if (uploadImage) {
+    const uploadImageInput = document.querySelector("[upload-image-input]");
+    const uploadImagePreview = document.querySelector("[upload-image-preview]");
+    const deleteImagePreview = document.querySelector("[delete-image-preview]");
+
+    // Xử lý khi thay đổi file
+    uploadImageInput.addEventListener("change", (e) => {
+        const files = e.target.files[0];
+        if (files) {
+            uploadImagePreview.src = URL.createObjectURL(files);
+            uploadImagePreview.style.display = "block";  // Hiển thị ảnh preview
+            deleteImagePreview.style.display = "inline-block";  // Hiển thị nút delete
+        }
+    });
+
+    // Xử lý khi nhấn nút delete
+    deleteImagePreview.addEventListener("click", () => {
+        uploadImagePreview.src = "";
+        uploadImageInput.value = "";  // Xóa file trong input
+        uploadImagePreview.style.display = "none";  // Ẩn ảnh preview
+        deleteImagePreview.style.display = "none";  // Ẩn nút delete
+    });
+}
+// end upload images
+
+
