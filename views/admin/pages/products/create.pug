@@ -1,5 +1,9 @@
 extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+
 block content 
+    +alert-error(5000)
+    
     h1(class="text-center") Thêm sản phẩm
     
     form(
