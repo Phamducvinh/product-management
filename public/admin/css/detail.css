@@ -1,0 +1,134 @@
+
+
+/* Container */
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Card sản phẩm */
+.col-md-6 {
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.col-md-6:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Tiêu đề */
+h1.text-center {
+    font-size: 2.2rem;
+    color: #1e88e5;
+    text-align: center;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+}
+
+/* Ảnh sản phẩm */
+img {
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    /* object-fit: cover; */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Thông tin sản phẩm */
+.col-md-6 h2 {
+    font-size: 1.4rem;
+    color: #37474f;
+    margin-bottom: 15px;
+}
+
+.col-md-6 p {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    color: #616161;
+    line-height: 1.5;
+}
+
+/* Trạng thái */
+.badge-success {
+    display: inline-block;
+    background: #66bb6a;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.badge-danger {
+    display: inline-block;
+    background: #ef5350;
+    color: white;
+    padding: 8px 12px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+/* Nút hành động */
+.col-md-12 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+a.btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    border-radius: 50px;
+    transition: all 0.3s ease-in-out;
+    text-decoration: none;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+a.btn-primary {
+    background-color: #42a5f5;
+    color: white;
+    border: none;
+}
+
+a.btn-primary:hover {
+    background-color: #1e88e5;
+}
+
+a.btn-danger {
+    background-color: #e57373;
+    color: white;
+    border: none;
+}
+
+a.btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    h1.text-center {
+        font-size: 1.8rem;
+    }
+
+    .col-md-6 {
+        max-width: 100%;
+    }
+
+    a.btn {
+        font-size: 0.9rem;
+    }
+}

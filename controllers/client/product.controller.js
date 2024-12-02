@@ -13,10 +13,34 @@ module.exports.index = async (req, res) => {
     });
     
 
-    console.log(newProducts);
+    // console.log(newProducts);
 
     res.render("client/pages/products/index", {
         pageTitle: "Danh sách sản phẩm",
         products: newProducts
     });
+}
+
+// [get] /products/:slug
+module.exports.detail = async (req, res) => {
+    try {
+        const find = {
+            slug: req.params.slug,
+            status: "active",
+            deleted: false
+        };
+        const product = await Product.findOne(find);
+        
+        res.render("client/pages/products/detail", {
+            pageTitle: product.title,
+            product: product
+        });
+    }      
+    catch (error) {
+        console.log(error);
+        return res.render("client/pages/404", {
+            pageTitle: "Không tìm thấy trang"
+        });
+    }
+    
 }

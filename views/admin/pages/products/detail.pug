@@ -1,5 +1,6 @@
 extends ../../layouts/default.pug
 
+
 block content 
     if(product)
         h1(class="text-center") Chi tiết sản phẩm
@@ -37,28 +38,5 @@ block content
     else
         h1(class="text-center") Sản phẩm không tồn tại
 
-    //- if(product.title)
-    //-     h1(class="mb-4") #{product.title}
-    //- if(product.price)
-    //-     div(class="mb-4") Giá: <b> #{product.price} </b>
-    //- if(product.discountPercentage)
-    //-     div(class="mb-4") Giảm giá: <b>#{product.discountPercentage}%</b>
-    //- if(product.stock)
-    //-     div(class="mb-4") Số lượng: <b>#{product.stock}</b>
-    //- if(product.thumbnail)
-    //-     div(class="mb-4")
-    //-         img(
-    //-             src=product.thumbnail 
-    //-             style="width: 100px"
-    //-         )
-    //- if(product.status)
-    //-     div(class="mb-4")
-    //-         span Trạng thái: 
-    //-         if(product.status === "active")
-    //-             span(class="badge badge-success") Đang kinh doanh
-    //-         else
-    //-             span(class="badge badge-danger") Ngừng kinh doanh
-
-    
-
+   
     script(src="/admin/js/product.js") 
