@@ -32,7 +32,7 @@ module.exports.index = async (req, res) => {
   const countProducts = await Product.countDocuments(find);
   let obejctPagination = paginationHelper(
     {
-      currentPage: parseInt(req.query.page) || 1,
+      currentPage: 1,
       limitItem: 4,
     },
     req.query,
