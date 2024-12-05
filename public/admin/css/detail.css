@@ -1,7 +1,7 @@
 
 
 /* Container */
-.row-1 {
+.product-row {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
