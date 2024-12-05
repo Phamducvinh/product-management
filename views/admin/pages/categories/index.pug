@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/table-tree.pug
 
 block content
     h1 Danh mục sản phẩm 
@@ -35,61 +36,4 @@ block content
                                     th Trạng thái
                                     th Hành động
                             tbody
-                                each item, index in records
-                                    tr
-                                        td 
-                                            input(
-                                                type="checkbox"
-                                                name="id"
-                                                value=item.id
-                                                class="check-item"
-                                            )
-                                        td= index + 1
-                                        td= item.title
-                                        td
-                                            img(
-                                                src=item.thumbnail, 
-                                                alt=item.title, 
-                                                width="100px",
-                                                height="auto"
-                                            )
-                                        
-                                        td 
-                                            input(
-                                                type="number"
-                                                value=item.position
-                                                style="width: 50px"
-                                                min="1"
-                                                name="position"
-                                            )
-                                        td 
-                                            if(item.status == "active")
-                                                a(
-                                                    href="javascript:;"
-                                                    data-status="active"
-                                                    data-id=item.id
-                                                    button-chang-status
-                                                    class="badge badge-success"
-                                                ) Còn hàng
-                                            else
-                                                a(
-                                                    href="javascript:;"
-                                                    data-status="inactive"
-                                                    data-id=item.id
-                                                    button-chang-status
-                                                    class="badge badge-danger"
-                                                ) Hết hàng
-                                        td
-                                            a(
-                                                href=`${prefixAdmin}/categories/detail/${item.id}`
-                                                class="btn btn-secondary btn-sm"
-                                            ) Chi tiết
-                                            a(
-                                                href=`${prefixAdmin}/categories/edit/${item.id}`
-                                                class="btn btn-warning btn-sm"
-                                            ) Sửa
-                                            button(
-                                                class="btn btn-danger "
-                                                button-delete
-                                                data-id=item.id
-                                            ) Xóa
+                                +table-tree(records)
