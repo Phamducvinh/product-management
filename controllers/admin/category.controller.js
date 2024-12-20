@@ -53,7 +53,79 @@ module.exports.createPost = async (req, res) => {
     res.redirect(`${systemConfig.prefixAdmin}/categories`);
 }
 
+// [GET] /admin/categories/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        // console.log(id);
+        const data = await Category.findOne({
+            _id: id,
+            deleted: false
+        });
+        // console.log(data);
+    
+        let find = {
+            deleted: false
+        }
+    
+        const records = await Category.find(find);
+    
+        const newRecords = createTreeHelper.tree(records);
+        res.render("admin/pages/categories/edit", {
+            pageTitle: "Chỉnh sửa danh mục sản phẩm",
+            data: data,
+            records: newRecords
+        })
+    }catch(error){
+        console.log(error);
+        res.redirect(`${systemConfig.prefixAdmin}/categories`);
+    }
+}
 
+// [PATCH] /admin/categories/edit/:id
+
+module.exports.editPatch = async (req, res) => {
+    const id = req.params.id;
+
+    req.body.position = parseInt(req.body.position);
+    // console.log(id);
+    // console.log(req.body);
+
+    await Category.updateOne({
+        _id: id
+    }, req.body);
+    
+    res.redirect("back");
+}
+
+// [GET] /admin/categories/detail
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+    const data = await Category.findOne({
+        _id: id,
+        deleted: false
+    });
+
+    res.render("admin/pages/categories/detail", {
+        pageTitle: "Chi tiết danh mục sản phẩm",
+        data: data
+    });
+}
+
+// [DELETE] /admin/categories/delete/:id
+module.exports.deleteItem = async (req, res) => {
+    const id = req.params.id;
+
+    await Category.updateOne({
+        _id: id
+    }, {
+        deleted: true,
+        deletedAt: Date.now()
+    });
+    req.flash("success", "Xóa danh mục thành công!");
+
+    res.redirect("back");
+}
 
 
 
