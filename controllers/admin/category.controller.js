@@ -116,16 +116,17 @@ module.exports.detail = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
     const id = req.params.id;
 
-    await Category.updateOne({
-        _id: id
-    }, {
-        deleted: true,
-        deletedAt: Date.now()
-    });
-    req.flash("success", "Xóa danh mục thành công!");
+    await Category.updateOne(
+        { _id: id },
+        {
+            deleted: true,
+            deletedAt: Date.now(),
+        }
+    ); 
+    req.flash("success", "Xóa sản phẩm thành công!");
 
     res.redirect("back");
-}
+};
 
 
 
