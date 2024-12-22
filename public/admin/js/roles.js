@@ -1,4 +1,4 @@
-// delete categoty
+// delete roles
 const buttonDelete = document.querySelectorAll("[button-delete]");
 if (buttonDelete.length > 0) {
     const formDeleteItem = document.querySelector("#form-delete-item");
@@ -11,11 +11,12 @@ if (buttonDelete.length > 0) {
             if (isConfirm) {
                 const id = button.getAttribute("data-id");
                 const action = `${path}/${id}?_method=DELETE`;
+                
 
                 formDeleteItem.action = action;
                 formDeleteItem.submit();
             }
+            
         });
     });
 }
-

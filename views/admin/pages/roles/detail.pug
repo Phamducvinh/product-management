@@ -1,0 +1,19 @@
+extends ../../layouts/default.pug
+
+block content
+    h1(class="mb-4") Chi tiết nhóm quyền
+
+    if(data)
+        div(class="row")
+            div(class="col-md-6")
+                h2 Tiêu đề: #{data.title}
+                p Mô tả: #{data.description}
+                p Ngày tạo: !{new Date(data.createdAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}
+                p Ngày cập nhật: !{new Date(data.updatedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })}
+            div(class="col-md-6")
+                h2 Danh sách quyền
+                ul
+                    each permission in data.permissions
+                        li= permission.title
+    else
+        h1(class="text-center") Nhóm quyền không tồn tại

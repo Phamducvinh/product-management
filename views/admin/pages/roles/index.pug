@@ -1,0 +1,48 @@
+extends ../../layouts/default.pug
+
+block content 
+    h1(class="text-center") Quản lý vai trò
+    a(
+        class="btn btn-primary"
+        href=`${prefixAdmin}/roles/create`
+    ) Thêm mới
+    table(class="table table-bordered table-hover")
+        thead
+            tr
+                th STT
+                th Tên
+                th Mô tả
+                th Hành động
+        tbody
+            if(records.length > 0)
+                each role, index in records
+                    tr
+                        td #{index + 1}
+                        td #{role.title}
+                        td #{role.description}
+                        td
+                            a(
+                                class="btn btn-info"
+                                href=`${prefixAdmin}/roles/detail/${role.id}`
+                            ) Chi tiết
+                            a(
+                                class="btn btn-primary"
+                                href=`${prefixAdmin}/roles/edit/${role.id}`
+                            ) Chỉnh sửa
+                            a(
+                                class="btn btn-danger"
+                                data-id=role.id
+                                button-delete
+                            ) Xóa
+            else
+                tr
+                    td(colspan="4") Không có dữ liệu
+
+            form(
+                action="", 
+                method="POST"
+                id="form-delete-item"
+                data-path=`${prefixAdmin}/roles/delete`
+            )  
+
+        script(src="/admin/js/roles.js")
