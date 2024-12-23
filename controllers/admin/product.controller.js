@@ -5,7 +5,8 @@ const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
 const systemConfig = require("../../config/system");
 const Category = require("../../models/category.model");
-const createTreeHelper = require("../../helpers/createTree")
+const createTreeHelper = require("../../helpers/createTree");
+const Account = require("../../models/account.model");
 
 // [get] // admin/products
 module.exports.index = async (req, res) => {
@@ -58,6 +59,14 @@ module.exports.index = async (req, res) => {
     .limit(obejctPagination.limitItem)
     .skip(obejctPagination.skip);
   // console.log(products);
+  for(const product of products){
+    const user = await Account.findOne({
+      _id: product.createdBy.account_id
+    });
+    if(user){
+      product.accountFullName = user.fullName;
+    }
+  }
 
   res.render("admin/pages/products/index", {
     pageTitle: "Quản lý sản phẩm",
@@ -146,6 +155,7 @@ module.exports.deleteItem = async (req, res) => {
 
 // [GET] /admin/products/create
 module.exports.create = async (req, res) => {
+  console.log(res.locals.user)
   let find = {
     deleted: false
   };
@@ -171,7 +181,9 @@ module.exports.createPost = async (req, res) => {
     req.body.position = parseInt(req.body.position);
   }
 
-  // req.body.thumbnail = `/uploads/${req.file.filename}`;
+  req.body.createdBy = {
+    account_id: res.locals.user.id
+  };
   
   const product = new Product(req.body);
   await product.save();

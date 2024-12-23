@@ -5,6 +5,7 @@ include ../../mixins/pagination.pug
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
+include ../../mixins/moment.pug
 
 block content
     +alert-success(5000)
@@ -60,6 +61,7 @@ block content
                             th Giá sản phẩm
                             th Vị trí
                             th Trạng thái
+                            th Người tạo
                             th Hành động
                     tbody
                         each item, index in products
@@ -106,6 +108,9 @@ block content
                                             button-chang-status
                                             class="badge badge-danger"
                                         ) Hết hàng
+                                td 
+                                    p #{item.accountFullName}
+                                    +formatDateTime(item.createdBy.createdAt)
                                 td
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`
