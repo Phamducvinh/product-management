@@ -5,9 +5,13 @@ const systemConfig = require('../../config/system');
 
 // [get] /admin/auth/login
 module.exports.index = (req, res) => {
-    res.render("admin/pages/auth/login", {
-        pageTitle: "Trang đăng nhập"
-    });
+    if(req.cookies.token){
+        res.redirect(`${systemConfig.prefixAdmin}/dashboard`);
+    }else{
+        res.render("admin/pages/auth/login", {
+            pageTitle: "Trang đăng nhập"
+        });
+    }
 }
 
 // [post] /admin/auth/login
