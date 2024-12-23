@@ -26,7 +26,6 @@ module.exports.loginPost = async (req, res) => {
     if(!user){
         req.flash("error", "Tài khoản không tồn tại!");
         return res.redirect("back");
-        return;
     }
 
     if(md5(password) !== user.password){

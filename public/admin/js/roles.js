@@ -76,8 +76,6 @@ if(dataRecords){
 
     records.forEach((record, index) => {
         const permissions = record.permissions
-        
-        permissions.forEach(permissions => {
             
             permissions.forEach(permission => {
                 const row = tablePermissions.querySelector(`[data-name="${permission}"]`);
@@ -85,7 +83,6 @@ if(dataRecords){
 
                 input.checked = true;
             });
-        });
     })
 }
 // end permissions data default

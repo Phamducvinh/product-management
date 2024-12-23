@@ -5,48 +5,49 @@ include ../../mixins/pagination.pug
 
 block content
     +alert-success(5000)
-    h1 Danh mục sản phẩm 
+    if(role.permissions.includes("products-category_view"))
+        h1 Danh mục sản phẩm 
 
-    .card.mb-3 
-        .card-header Danh sách danh mục
-            .card-body 
-                .row 
-                    .col-8 
-                    .col-4 
-                        a(
-                            href=`${prefixAdmin}/categories/create`,
-                            class='btn btn-primary float-right'
-                        ) Thêm mới
+        .card.mb-3 
+            .card-header Danh sách danh mục
+                .card-body 
+                    .row 
+                        .col-8 
+                        .col-4 
+                            if(role.permissions.includes("products-category_create"))
+                                a(
+                                    href=`${prefixAdmin}/categories/create`,
+                                    class='btn btn-primary float-right'
+                                ) Thêm mới
 
+                    table(
+                                class="table table-bordered table-striped"
+                                checkbox-multi
+                            )
+                                thead
+                                    tr
+                                        th 
+                                            input(
+                                                type="checkbox"
+                                                name="checkall"
+                                                id="checkall"
+                                                class="checkall"
+                                            )
+                                        th STT
+                                        th Tên sản phẩm
+                                        th Ảnh sản phẩm
+                                        th Vị trí
+                                        th Trạng thái
+                                        th Hành động
+                                tbody
+                                    +table-tree(records)
+                
+                
+                form(
+                    action="", 
+                    method="POST"
+                    id="form-delete-item"
+                    data-path=`${prefixAdmin}/categories/delete`
+                ) 
 
-                table(
-                            class="table table-bordered table-striped"
-                            checkbox-multi
-                        )
-                            thead
-                                tr
-                                    th 
-                                        input(
-                                            type="checkbox"
-                                            name="checkall"
-                                            id="checkall"
-                                            class="checkall"
-                                        )
-                                    th STT
-                                    th Tên sản phẩm
-                                    th Ảnh sản phẩm
-                                    th Vị trí
-                                    th Trạng thái
-                                    th Hành động
-                            tbody
-                                +table-tree(records)
-            
-            
-            form(
-                action="", 
-                method="POST"
-                id="form-delete-item"
-                data-path=`${prefixAdmin}/categories/delete`
-            ) 
-
-            script(src="/admin/js/category.js") 
+                script(src="/admin/js/category.js") 
