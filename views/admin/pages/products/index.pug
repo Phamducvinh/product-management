@@ -62,6 +62,7 @@ block content
                             th Vị trí
                             th Trạng thái
                             th Người tạo
+                            th Người cập nhật
                             th Hành động
                     tbody
                         each item, index in products
@@ -108,9 +109,18 @@ block content
                                             button-chang-status
                                             class="badge badge-danger"
                                         ) Hết hàng
+                                //- người tạo
                                 td 
                                     p #{item.accountFullName}
-                                    +formatDateTime(item.createdBy.createdAt)
+                                    p
+                                        +formatDateTime(item.createdBy.createdAt)
+                                //- người cập nhật
+                                td 
+                                    - const updatedBy = item.updatedBy.slice(-1)[0]
+                                    if(updatedBy)
+                                        p #{updatedBy.accountFullName}
+                                        p   
+                                            +formatDateTime(updatedBy.updatedAt)
                                 td
                                     a(
                                         href=`${prefixAdmin}/products/detail/${item.id}`
