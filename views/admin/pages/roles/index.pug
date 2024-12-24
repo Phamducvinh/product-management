@@ -1,4 +1,5 @@
 extends ../../layouts/default.pug
+include ../../mixins/moment.pug
 
 block content 
     if(role.permissions.includes("roles_view"))
@@ -14,6 +15,7 @@ block content
                     th STT
                     th Tên
                     th Mô tả
+                    th Người chỉnh sửa
                     th Hành động
             tbody
                 if(records.length > 0)
@@ -22,6 +24,13 @@ block content
                             td #{index + 1}
                             td #{role.title}
                             td #{role.description}
+                            //- người cập nhật
+                            td 
+                                - const updatedBy = role.updatedBy.slice(-1)[0]
+                                if(updatedBy)
+                                    p #{updatedBy.accountFullName}
+                                    p   
+                                        +formatDateTime(updatedBy.updatedAt)
                             td
                                 a(
                                     class="btn btn-info"

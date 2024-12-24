@@ -1,11 +1,24 @@
 const Role = require("../../models/role.model");
 const systemConfig = require("../../config/system");
+const Account = require("../../models/account.model");
 // [get] // admin/roles/index
 module.exports.index = async (req, res) => {
     let find = {
         deleted: false
     };
     const records = await Role.find(find);
+
+    for(const record of records){
+        // lấy thông tin người sửa
+        const updatedBy = record.updatedBy.slice(-1)[0];
+        if(updatedBy){
+            const userUpdated = await Account.findOne({
+                _id: updatedBy.account_id
+            });
+            updatedBy.accountFullName = userUpdated.fullName;
+        }
+    }
+
     res.render("admin/pages/roles/index", {
         pageTitle: "Nhóm quyền",
         records: records
@@ -56,7 +69,16 @@ module.exports.edit = async (req, res) => {
 module.exports.editPatch = async (req, res) => {
     try{
         const id = req.params.id;
-        await Role.updateOne({_id: id}, req.body);
+
+        const updatedBy = {
+            account_id: res.locals.user.id,
+            updatedAt: new Date()
+        }
+
+        await Role.updateOne({_id: id}, {
+            ...req.body,
+            $push: { updatedBy: updatedBy}
+        });
         req.flash("success", "Chỉnh sửa nhóm quyền thành công");
     }catch(error){
         req.flash("error", "Chỉnh sửa nhóm quyền thất bại");
