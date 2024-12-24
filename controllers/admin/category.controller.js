@@ -1,5 +1,6 @@
 const Category = require("../../models/category.model");
 const systemConfig = require("../../config/system");
+const Account = require("../../models/account.model");
 
 const createTreeHelper = require("../../helpers/createTree")
 
@@ -12,6 +13,17 @@ module.exports.index = async (req, res) => {
     const records = await Category.find(find);
 
     const newRecords = createTreeHelper.tree(records);
+
+    for(const record of records){
+        // lấy thông tin người sửa
+        const updatedBy = record.updatedBy.slice(-1)[0];
+        if(updatedBy){
+            const userUpdated = await Account.findOne({
+                _id: updatedBy.account_id
+            });
+            updatedBy.accountFullName = userUpdated.fullName;
+        }
+    }
 
     res.render("admin/pages/categories/index", {
         pageTitle: "Danh mục sản phẩm",
@@ -88,12 +100,16 @@ module.exports.editPatch = async (req, res) => {
     const id = req.params.id;
 
     req.body.position = parseInt(req.body.position);
-    // console.log(id);
-    // console.log(req.body);
 
-    await Category.updateOne({
-        _id: id
-    }, req.body);
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    }
+
+    await Category.updateOne({_id: id}, {
+        ...req.body,
+        $push: {updatedBy: updatedBy}
+    });
     
     res.redirect("back");
 }

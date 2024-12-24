@@ -2,6 +2,7 @@ extends ../../layouts/default.pug
 include ../../mixins/table-tree.pug
 include ../../mixins/alert.pug
 include ../../mixins/pagination.pug
+include ../../mixins/moment.pug
 
 block content
     +alert-success(5000)
@@ -38,6 +39,7 @@ block content
                                         th Ảnh sản phẩm
                                         th Vị trí
                                         th Trạng thái
+                                        th Người cập nhật
                                         th Hành động
                                 tbody
                                     +table-tree(records)
