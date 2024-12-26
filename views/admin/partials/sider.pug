@@ -9,7 +9,7 @@
                     a(href=`${prefixAdmin}/products`) Sản phẩm
             if(role.permissions.includes("products-category_view"))
                 li
-                    a(href=`${prefixAdmin}/categories`) Danh mục
+                    a(href=`${prefixAdmin}/categories`) Danh mục sản phẩm
 
             if(role.permissions.includes("roles_view"))
                 li
@@ -22,3 +22,9 @@
             if(role.permissions.includes("accounts_view"))
                 li
                     a(href=`${prefixAdmin}/accounts`) Danh sách tài khoản
+            
+            li 
+                a(href=`${prefixAdmin}/articles`) Bài viết
+            
+            li
+                a(href=`${prefixAdmin}/article_Categories`) Danh mục bài viết

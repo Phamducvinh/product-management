@@ -1,0 +1,57 @@
+extends ../../layouts/default.pug
+
+block content 
+    h1(class="mb-4") Thông tin cá nhân 
+
+    if(user.avatar)
+        img(
+            src=user.avatar
+            alt="Avatar"
+            width="200"
+            class="img-fluid mb-4"
+        )
+    else
+        img(
+            src="/admin/assets/img/avatar.png"
+            alt="Avatar"
+            class="img-fluid mb-4"
+        )
+
+    if(user.fullName)
+        p(class="mb-4") Họ và tên: #{user.fullName}
+    else
+        p(class="mb-4") Họ và tên: Chưa cập nhật
+
+    if(user.email)
+        p(class="mb-4") Email: #{user.email}
+    else
+        p(class="mb-4") Email: Chưa cập nhật
+    
+    if(user.phone)
+        p(class="mb-4") Số điện thoại: #{user.phone}
+    else
+        p(class="mb-4") Số điện thoại: Chưa cập nhật
+
+    if(user.address)
+        p(class="mb-4") Địa chỉ: #{user.address}
+    else
+        p(class="mb-4") Địa chỉ: Chưa cập nhật
+    
+    p 
+        span Trạng thái 
+        span 
+            b 
+                if(user.status)
+                    | : Đang hoạt động
+                else
+                    | : Đã khóa
+    
+    if(role.title)
+        p(class="mb-4") Chức vụ: #{role.title}
+    else
+        p(class="mb-4") Chức vụ: Chưa cập nhật
+
+    a(
+        href=`${prefixAdmin}/my-account/edit`
+        class="btn btn-primary"
+    ) Chỉnh sửa thông tin cá nhân

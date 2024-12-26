@@ -1,0 +1,49 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/search.pug
+include ../../mixins/sort.pug
+include ../../mixins/filter-status.pug
+
+block content
+    +alert-success(5000)
+    
+    .card.mb-3 
+        .card-header Danh sách bài viết
+        .card-body 
+            .row 
+                .col-8
+                    a(
+                        href=`${prefixAdmin}/articles/create`
+                        class="btn btn-outline-success"
+                    ) Tạo bài viết
+
+            .table-responsive.mt-3
+                table.table.table-bordered.table-hover
+                    thead
+                        tr
+                            th STT
+                            th Tiêu đề
+                            th Tác giả
+                            th Thể loại
+                            th Mô tả
+                            th Trạng thái
+                            th Hành động
+                    tbody
+                        each item, index in articles
+                            tr
+                                td #{pagination.limitItem*(pagination.currentPage-1)+index+1}
+                                td= item.title
+                                td= item.author
+                                td= item.article_category_id
+                                td= item.status
+                                td= item.description
+                                td
+                                    a(
+                                        href=`${prefixAdmin}/articles/edit/${item.id}`
+                                        class="btn btn-sm btn-outline-primary"
+                                    ) Sửa
+                                    a(
+                                        href=`${prefixAdmin}/articles/delete/${item.id}`
+                                        class="btn btn-sm btn-outline-danger"
+                                    ) Xóa
+
