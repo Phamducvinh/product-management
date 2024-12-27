@@ -189,12 +189,24 @@ footer ul li a:hover {
     justify-content: center; /* Căn giữa hình ảnh */
     align-items: center; /* Căn giữa hình ảnh theo chiều dọc */
     overflow: hidden; /* Ẩn phần hình ảnh thừa nếu tỷ lệ không phù hợp */
+    position: relative;
 }
 
 .inner-image img {
     width: 100%; /* Đảm bảo hình ảnh chiếm toàn bộ chiều rộng */
     height: 100%; /* Đảm bảo hình ảnh có chiều cao bằng chiều cao của phần chứa */
     object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng và vẫn giữ tỷ lệ */
+}
+.product-item .inner-featured {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #f1c40f; /* Màu nền vàng */
+    color: #fff; /* Màu chữ trắng */
+    padding: 5px 10px; /* Khoảng cách giữa chữ và viền */
+    border-radius: 15px; /* Bo góc hình chữ nhật */
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
 /* Inner content styling */

@@ -33,6 +33,28 @@ block content
                     option(value="") -- Chọn danh mục --
                     if(category)
                         +select-tree(category)
+            
+            //- sản phẩm nổi bật
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured"
+                    name="featured"
+                    value="1"
+                    
+                )
+                label(for="featured" class="form-check-label") Sản phẩm nổi bật
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio"
+                    class="form-check-input"
+                    id="featured"
+                    name="featured"
+                    value="0"
+                )
+                label(for="featured" class="form-check-label") Không nổi bật
+
             div(class="form-group")
                 label(for="desc") Mô tả
                 textarea(

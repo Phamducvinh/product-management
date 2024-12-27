@@ -1,4 +1,8 @@
 const Product = require("../../models/product.model");
+const productHelper = require("../../helpers/products");
+const Category = require("../../models/category.model");
+const productCategoryHelper = require("../../helpers/products.category");
+
 
 // [get] /products
 module.exports.index = async (req, res) => {
@@ -7,11 +11,7 @@ module.exports.index = async (req, res) => {
         deleted: false
     }).sort({ position: "desc" });
 
-    const newProducts = products.map(item => {
-        item.priceNew = (item.price * (1 - item.discountPercentage / 100)).toFixed(0);
-        return item;
-    });
-    
+    const newProducts = productHelper.priceNewProducts(products);
 
     // console.log(newProducts);
 
@@ -43,4 +43,31 @@ module.exports.detail = async (req, res) => {
         });
     }
     
+}
+
+// [get] /products/:slugCategory
+module.exports.category = async (req, res) => {
+
+    const category = await Category.findOne({
+        slug: req.params.slugCategory,
+        deleted: false
+    });
+
+    
+
+    const listSubCategory = await productCategoryHelper.getSubCategory(category.id);
+    
+    const listSubCategoryId = listSubCategory.map(item => item.id);
+
+    console.log(listSubCategoryId)
+
+    const products = await Product.find({
+        product_category_id: { $in: [category.id, ...listSubCategoryId] },
+        deleted: false,
+    }).sort({ position: "desc" });
+
+    res.render("client/pages/products/index", {
+        pageTitle: category.title,
+        products: products
+    });
 }
