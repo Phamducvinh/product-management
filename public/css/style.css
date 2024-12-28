@@ -330,3 +330,62 @@ footer ul li a:hover {
 
 /* end sub menu */
 
+/* product-detail */
+.product-detail .inner-thumb img {
+    width: 100%;
+    height: auto;
+    /* object-fit: cover; */
+}
+
+.product-detail .inner-title {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.product-detail .inner-category {
+    margin-bottom: 10px;
+}
+
+.product-detail .inner-price-new {
+    font-size: 20px;
+    font-weight: 600;
+    color: green;
+    margin-bottom: 10px;
+}
+
+.product-detail .inner-price-old {
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: line-through;
+    color: red;
+    margin-bottom: 10px;
+}
+
+.product-detail .inner-percent {
+    margin-bottom: 10px;
+}
+
+.product-detail .inner-percent span {
+    color: #fff;
+    background: #c0392b;
+    font-weight: 600;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.product-detail .inner-stock {
+    margin-bottom: 10px;
+}
+
+.product-detail .inner-stock span {
+    color: #fff;
+    background-color: #2ecc71;
+    font-weight: 600;
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+/* end product detail */
+

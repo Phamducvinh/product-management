@@ -24,46 +24,9 @@ block content
                         placeholder="Nhập tiêu đề bài viết"
                         required
                     )
-                div(class="form-group")
-                    label(for="author") Tác giả
-                    input(
-                        type="text"
-                        class="form-control"
-                        id="author"
-                        name="author"
-                        placeholder="Nhập tên tác giả"
-                        required
-                    )
-                div(class="form-group")
-                    label(for="article_category_id") Thể loại
-                    input(
-                        type="text"
-                        class="form-control"
-                        id="article_category_id"
-                        name="article_category_id"
-                    )
-                        
 
-                div(class="form-group")
-                    label(for="desc") Mô tả
-                    textarea(
-                        class="form-control textarea-mce"
-                        id="desc"
-                        name="description"
-                        rows="5"
-                        placeholder="Nhập mô tả bài viết"
-                    )
-                div(class="form-group")
-                    label(for="content") Nội dung
-                    textarea(
-                        class="form-control textarea-mce"
-                        id="content"
-                        name="content"
-                        rows="5"
-                        placeholder="Nhập nội dung bài viết"
-                    )
                 div(class="form-group" upload-image)
-                    label(for="thumbnail") Ảnh bài viết
+                    label(for="thumbnail") Ảnh sản phẩm
                     input(
                         type="file"
                         class="form-control-file"
@@ -84,17 +47,60 @@ block content
                             delete-image-preview
                         ) X
                 
+
+                div(class="form-group")
+                    label(for="author") Tác giả
+                    input(
+                        type="text"
+                        class="form-control"
+                        id="author"
+                        name="author"
+                        placeholder="Nhập tên tác giả"
+                        required
+                    )
+                
+                div(class="form-group")
+                    label(for="article_Category_id") Danh mục
+                    select(
+                        class="form-control"
+                        id="article_Category_id"
+                        name="article_Category_id"
+                    )
+                        option(value="") -- Chọn danh mục --
+                        if(articleCategory)
+                            +select-tree(articleCategory)
+
+                
+                div(class="form-group")
+                    label(for="content") Nội dung
+                    textarea(
+                        class="form-control textarea-mce"
+                        id="content"
+                        name="content"
+                        rows="5"
+                        placeholder="Nhập nội dung bài viết"
+                    )
+                
                 div(class="form-group")
                     label(for="status") Trạng thái
                     select(
-                        name="satus"
                         class="form-control"
-                    ) 
-                        option(value="draft") Nháp
-                        option(value="published") Xuất bản 
-                        option(value="pending") Chờ duyệt
-                    
+                        id="status"
+                        name="status"
+                    )
+                        option(value="draft") Bản nháp
+                        option(value="published") Đã xuất bản
 
+                div(class="form-group")
+                    label(for="position") Vị trí
+                    input(
+                        type="number"
+                        class="form-control"
+                        id="position"
+                        name="position"
+                        min = "1"
+                        placeholder="Tự động tăng"
+                    )
                 div(class="form-group")
                     button(
                         type="submit"

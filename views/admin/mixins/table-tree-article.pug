@@ -1,0 +1,59 @@
+mixin table-tree-article(items, level = 1)
+    each item, index in items
+        - const prefix = Array(level + 1).join('-- ')
+        tr
+            td 
+                input(
+                    type="checkbox"
+                    name="id"
+                    value=item.id
+                    class="check-item"
+                )
+            td #{item.index}
+            td #{prefix} #{item.title}
+            td
+                img(
+                    src=item.thumbnail, 
+                    alt=item.title, 
+                    width="100px",
+                    height="auto"
+                )
+            
+            td 
+                input(
+                    type="number"
+                    value=item.position
+                    style="width: 50px"
+                    min="1"
+                    name="position"
+                )
+            
+            //- người cập nhật
+            td 
+                - const updatedBy = item.updatedBy.slice(-1)[0]
+                if(updatedBy)
+                    p #{updatedBy.accountFullName}
+                    p   
+                        +formatDateTime(updatedBy.updatedAt)
+            td
+                if(role.permissions.includes("products-category_edit"))
+                    a(
+                        href=`${prefixAdmin}/categories/detail/${item.id}`
+                        class="btn btn-secondary btn-sm"
+                    ) Chi tiết
+                    a(
+                        href=`${prefixAdmin}/categories/edit/${item.id}`
+                        class="btn btn-warning btn-sm"
+                    ) Sửa
+                if(role.permissions.includes("products-category_delete"))
+                    button(
+                        class="btn btn-danger "
+                        button-delete
+                        data-id=item.id
+                    ) Xóa
+
+        if item.children && item.children.length > 0
+            +table-tree-article(item.children, level + 1)
+
+
+

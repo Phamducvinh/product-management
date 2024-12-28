@@ -1,4 +1,51 @@
 extends ../../layouts/default.pug
+include ../../mixins/table-tree-article.pug
+include ../../mixins/alert.pug
+include ../../mixins/pagination.pug
+include ../../mixins/moment.pug
 
 block content 
-    h1 Danh sách danh mục bài viết
+    +alert-success(5000)
+
+    .card.mb-3 
+        .card-header Danh Sách 
+        .card-body 
+            .row 
+                .col-8 
+                .col-4.text-right
+                    a(
+                        href=`${prefixAdmin}/article_categories/create`
+                        class="btn btn-primary"
+                    ) Thêm mới
+
+            table(
+                class="table table-bordered table-striped"
+                checkbox-multi
+            )
+                thead
+                    tr
+                        th 
+                            input(
+                                type="checkbox"
+                                name="checkall"
+                                id="checkall"
+                                class="checkall"
+                            )
+                        th STT
+                        th Tên danh mục
+                        th Hình ảnh
+                        th Vị trí
+                        th Người cập nhật
+                        th Hành động
+                tbody
+                    +table-tree-article(articleCategories)
+
+        form(
+            action=""
+            method="POST"
+            id="form-delete-item"
+            data-path=`${prefixAdmin}/article_categories/delete`
+            
+        )
+
+        script(src="/admin/js/category.js")

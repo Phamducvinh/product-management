@@ -1,7 +1,8 @@
 const systemConfig = require("../../config/system");
 const Account = require("../../models/account.model");
 const Article = require("../../models/article.model");
-
+const createTreeHelper = require("../../helpers/createTree");
+const ArticleCategory = require("../../models/articleCategory.model");
 
 const searchHelper = require("../../helpers/search");
 const paginationHelper = require("../../helpers/pagination");
@@ -21,17 +22,6 @@ module.exports.index = async (req, res) => {
         find.title = objectSearch.keywordRegex;
     }
 
-    // phân trang
-    const countArticles = await Article.countDocuments(find);
-    let obejctPagination = paginationHelper(
-        {
-            currentPage: 1,
-            limitItem: 4,
-        }
-        , req.query
-        , countArticles
-    )
-    // end phân trang
 
     // sort
     let sort = {};
@@ -42,7 +32,16 @@ module.exports.index = async (req, res) => {
     }
     // end sort
 
-    const articles = await Article.find(find);
+    const articles = await Article.find(find).sort(sort);
+
+    for(const article of articles){
+        const category = await ArticleCategory.findOne({
+            _id: article.article_Category_id
+        });
+        if(category){
+            article.article_Category_id = category.title;
+        }
+    }
 
     res.render("admin/pages/articles/index", {
         pageTitle: "Bài viết",
@@ -50,35 +49,33 @@ module.exports.index = async (req, res) => {
     });
 }
 
-// [PATCH] /admin/articles/change-status/:status/:id
-module.exports.changeStatus = async (req, res) => {
-    const id = req.params.id;
-    const status = req.params.status;
-
-    await Article.updateOne({_id: id}, {
-        status: status
-    });
-
-    req.flash('success', 'Cập nhật trạng thái thành công');
-
-    res.redirect('back');
-}
-
 // [GET] /admin/articles/create
 module.exports.create = async (req, res) => {
     let find = {
         deleted: false
     };
-    const article = await Article.find(find);
+    const articleCategory = await ArticleCategory.find(find);
+    const newArticleCategory = createTreeHelper.tree(articleCategory);
 
     res.render("admin/pages/articles/create", {
         pageTitle: "Tạo bài viết",
-        article: article
+        articleCategory: newArticleCategory
     });
 }
 
 // [POST] /admin/articles/create
 module.exports.createPost = async (req, res) => {
+    if(req.body.position == ""){
+        const countArticle = await Article.countDocuments();
+        req.body.position = countArticle + 1;
+    }else{
+        req.body.position = parseInt(req.body.position);
+    }
+
+    req.body.createdBy = {
+        account_id: res.locals.user.id
+    };
+    
     const articles = new Article(req.body);
     await articles.save();
 

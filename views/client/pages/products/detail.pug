@@ -1,22 +1,56 @@
 extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
 
 block content
-    if(product)
-        h1(class="text-center") Chi tiết sản phẩm
-        div(class="row")
-            div(class="col-md-6")
-                if(product.thumbnail)
-                    img(
-                        src=product.thumbnail
-                        style="width: 350px"
+    .product-detail 
+        .container.my-5 
+            .row 
+                .col-6 
+                    img(src=product.thumbnail alt=product.title)
+                .col-6
+                    h1(class="inner-title")= product.title
+
+                    if(product.category)
+                        div(class="inner-category")
+                            span Danh mục:
+                            a(href=`/products/${product.category.slug}`)= product.category.title
+                    
+                    if(product.priceNew)
+                        div(class="inner-price-new")
+                            span Giá mới: 
+                            span #{product.priceNew} $
+                    
+                    if(product.price)
+                        div(class="inner-price-old")
+                            span Giá cũ: 
+                            span #{product.price} $
+
+                    if(product.discountPercentage)
+                        div(class="inner-discount")
+                            span Giảm giá: 
+                            span #{product.discountPercentage} %
+                    
+                    if(product.stock)
+                        div(class="inner-stock") Còn lại: <span>#{product.stock}</span> sản phẩm
+                    
+                    form(
+                        action=`/cart/add/${product.id}`,
+                        method="POST"
                     )
-            div(class="col-md-6")
-                h2 Tiêu đề: #{product.title}
-                p Mô tả: #{product.description}
-                p Giá: #{product.price}
-                p Giảm giá: #{product.discountPercentage}%
-                p Số lượng: #{product.stock}
-                
-                p Vị trí: #{product.position}
-    else
-        h1(class="text-center") Sản phẩm không tồn tại
+                        input(
+                            class="form-control mb-2",
+                            type="number",
+                            name="quantity",
+                            value="1",
+                            min="1",
+                            max=product.stock
+                        )
+                        button(
+                            class="btn btn-primary",
+                            type="submit"
+                        ) Thêm vào giỏ hàng
+    .container.my-5
+        .row 
+            .col-12 
+                +box-head("Mô tả sản phẩm")
+                .inner-desc !{product.description}

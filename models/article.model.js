@@ -5,27 +5,37 @@ mongoose.plugin(slug);
 
 const articleSchema = new mongoose.Schema({
     title: String,
+    article_Category_id: { 
+        type: String,
+        default: "" 
+    },
+    content: String,
+    author: String,
+    thumbnail: String,
+    status: String,
+    position: Number,
     slug: { 
         type: String, 
         slug: "title", 
         unique: true 
     },
-    content: String,
-    description: String,
-    article_Category_id: { 
-        type: String,
-        default: "" 
+    createdBy: {
+        account_id: String,
+        createdAt: {
+            type: Date,
+            default: Date.now
+        }
     },
-    author: String,
-    thumbnail: String,
-    status: String,
-    createdAt: { 
-        type: Date, 
-        default: Date.now 
+    deleted: {
+        type: Boolean,
+        default: false
     },
-    updatedAt: { 
-        type: Date 
-    },
+    updatedBy: [
+        {
+            account_id: String,
+            updatedAt: Date
+        },
+    ],
     publishedAt: {
         type: Date 
     },

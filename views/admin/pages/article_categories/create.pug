@@ -1,0 +1,85 @@
+extends ../../layouts/default.pug
+include ../../mixins/alert.pug
+include ../../mixins/select-tree.pug
+
+block content 
+    +alert-error(5000)
+
+    
+    h1(class="text-center") Thêm danh mục bài viết
+    
+    form(
+        action=`${prefixAdmin}/article_categories/create`
+        method="POST"
+        enctype="multipart/form-data"
+    )
+        div(class="form-group")
+            label(for="title") Tiêu đề
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                placeholder="Nhập tên danh mục"
+                required
+            )
+        div(class="form-group")
+            label(for="parent_id") Danh mục cha
+            select(
+                class="form-control"
+                id="parent_id"
+                name="parent_id"
+            )
+                option(value="") -- Chọn danh mục --
+                if(articleCategories)
+                    +select-tree(articleCategories)
+
+        div(class="form-group" upload-image)
+            label(for="thumbnail") Ảnh sản phẩm
+            input(
+                type="file"
+                class="form-control-file"
+                id="thumbnail"
+                name="thumbnail"
+                accept="image/*"
+                upload-image-input
+            )
+            div(class="image-container")
+                img(
+                    src=""
+                    upload-image-preview
+                    class="image-preview"
+                )
+                button(
+                    type="button"
+                    class="delete-image-preview"
+                    delete-image-preview
+                ) X
+
+        div(class="form-group")
+            label(for="desc") Mô tả
+            textarea(
+                class="form-control textarea-mce"
+                id="desc"
+                name="description"
+                rows="5"
+                placeholder="Nhập mô tả sản phẩm"
+                
+            )
+            
+        div(class="form-group")
+            label(for="position") Vị trí
+            input(
+                type="number"
+                class="form-control"
+                id="position"
+                name="position"
+                min = "1"
+                placeholder="Tự động tăng"
+            )
+        
+
+        button(
+            type="submit"
+            class="btn btn-primary"
+        ) Thêm mới
