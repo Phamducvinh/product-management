@@ -7,9 +7,26 @@ header.header
                 .inner-logo
                     a(href="/") 
                         img(src="/images/logo.png", alt="logo" class="img-logo") 
+            .col-5
+                form(
+                    action="/search"
+                    method="GET"
+                )
+                    div(class="form-group d-flex mb-0")
+                        input(
+                            type="text"
+                            placeholder="Tìm kiếm sản phẩm"
+                            class="form-control"
+                            name="keyWord"
+                            value=keyWord
+                        )
+                        button(
+                            type="submit"
+                            class="btn btn-primary"
                         
+                        ) Tìm kiếm
 
-            .col-9 
+            .col-4 
                 .inner-menu 
                     ul 
                         li 
