@@ -1,0 +1,73 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-head.pug
+include ../../mixins/alert.pug
+
+block content 
+    +alert-success(5000)
+    +alert-error(5000)
+
+    .container.my-3 
+        .row    
+            .col-12 
+                +box-head("Đặt hàng thành công")
+
+        .row
+            .col-12 
+                div(class="alert alert-success")
+                    | Đặt hàng thành công. Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất để xác nhận đơn hàng. Cảm ơn bạn đã mua hàng tại cửa hàng của chúng tôi.
+
+        if(order)
+            .row 
+                .col-12 
+                    h4(class="mt-4") Thông tin cá nhân 
+                    table(class="table table-bordered")
+                        tbody
+                            tr
+                                td Họ và tên
+                                td 
+                                    b #{order.userInfo.fullName}
+                            tr
+                                td Địa chỉ
+                                td 
+                                    b #{order.userInfo.address}
+                            tr
+                                td Số điện thoại
+                                td 
+                                    b #{order.userInfo.phone}
+                            tr
+                                td Ghi chú
+                                td 
+                                    b #{order.userInfo.note}
+            .row 
+                .col-12 
+                    h4(class="mt-4") Thông tin đơn hàng
+                    table(class="table table-bordered")
+                        thead
+                            tr
+                                th STT
+                                th Ảnh sản phẩm
+                                th Tên sản phẩm
+                                th Số lượng
+                                th Đơn giá
+                                th Thành tiền
+                        tbody
+                            if(order.products.length > 0)
+                                each item, index in order.products
+                                    tr
+                                        td #{index + 1}
+                                        td
+                                            img(
+                                                src=item.productInfo.thumbnail, 
+                                                alt=item.productInfo.title, 
+                                                class="img-fluid", 
+                                                style="width: 80px"
+                                            )
+                                        td #{item.productInfo.title}
+                                        td #{item.quantity}
+                                        td #{item.priceNew}$
+                                        td #{item.totalPrice}$
+                            else
+                                tr
+                                    td(colspan="7") Không có sản phẩm nào trong đơn hàng
+                    if(order.totalPrice)
+                        h4(class="mt-4") Tổng tiền: #{order.totalPrice}$
