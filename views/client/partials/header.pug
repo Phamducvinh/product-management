@@ -37,13 +37,19 @@ header.header
                             a(href=pathProduct) Sản phẩm
                             +sub-menu(layoutProductCategory, pathProduct)
                             
-                        li 
-                            a(href="/about") Giới thiệu
                         
-                        li
-                            a(href="/contact") Liên hệ
-
                         li 
                             a(href="/cart") 
                                 i(class="") Giỏ hàng(#{miniCart ? miniCart.totalQuantity : 0})
+                        if(user)
+                                
+                            li
+                                a(href="/user/logout") Đăng xuất
+                        else
+
+                            li
+
+                                a(href="/user/login") Đăng nhập
+                            li
+                                a(href="/user/register") Đăng ký
 
