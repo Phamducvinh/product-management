@@ -28,6 +28,7 @@
     "nodemailer": "^6.9.16",
     "product-management": "file:",
     "pug": "^3.0.3",
+    "socket.io": "^4.8.1",
     "streamifier": "^0.1.1",
     "tinymce": "^7.5.1"
   },
