@@ -1,13 +1,16 @@
 footer.footer
     .container
         .row
+            // Cột 1: Bản quyền
             .col-3
                 h3 Đây là footer
                 p 
-                    | Một số thông tin giới thiệu về trang web của bạn.
+                    | &copy; #{settingGeneral.copyright}
+            
+            // Cột 2: Liên kết nhanh
             .col-3
                 h3 Liên kết nhanh
-                ul
+                ul.footer-links
                     li
                         a(href="/about") Giới thiệu
                     li
@@ -16,21 +19,30 @@ footer.footer
                         a(href="/privacy") Chính sách bảo mật
                     li
                         a(href="/services") Dịch vụ
+            
+            // Cột 3: Liên hệ
             .col-3
                 h3 Liên hệ
-                p
-                    | Địa chỉ: 123 Đường ABC, Thành phố XYZ
-                p
-                    | Điện thoại: 0123 456 789
-                p
-                    | Email: info@example.com
+                address
+                    p
+                        | Địa chỉ: #{settingGeneral.address}
+                    p
+                        | Điện thoại: 
+                        a(href="tel:#{settingGeneral.phone}") #{settingGeneral.phone}
+                    p
+                        | Email: 
+                        a(href="mailto:#{settingGeneral.email}") #{settingGeneral.email}
+                    p 
+                        | Website: 
+                        a(href="https://#{settingGeneral.websiteName}" target="_blank") #{settingGeneral.websiteName}
+            
+            // Cột 4: Theo dõi chúng tôi
             .col-3
                 h3 Theo dõi chúng tôi
                 .social-icons
-                    a(href="https://www.google.com" target="_blank")
+                    a(href="https://www.google.com" target="_blank" title="Google")
                         i.fab.fa-google
-                    a(href="https://github.com" target="_blank")
+                    a(href="https://github.com" target="_blank" title="GitHub")
                         i.fab.fa-github
-                    a(href="https://facebook.com" target="_blank")
+                    a(href="https://facebook.com" target="_blank" title="Facebook")
                         i.fab.fa-facebook
-

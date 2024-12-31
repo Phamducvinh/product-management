@@ -1,9 +1,67 @@
 extends ../../layouts/default.pug
 
 block content 
-    h1 Dashboard Admin
-    
-    div #{user}
-    div ----------
-    div #{role.title}
-    div #{role.permissions}
+    h1 Trang tổng quan 
+
+    .row.mt-4 
+        .col-12 
+            .card.mb-4 
+                .card-header Thông tin tài khoản 
+                .card-body 
+                    if(user.avatar)
+                        img(
+                            src=user.avatar 
+                            alt=user.fullName 
+                            style="width: 100px; height: 100px; border-radius: 50%;"
+                        )
+                    if(user.fullName)
+                        h5.card-title #{user.fullName}
+                    if(user.email)
+                        p.card-text #{user.email}
+                    if(user.phone)
+                        p.card-text #{user.phone}
+                    if(user.address)
+                        p.card-text #{user.address}
+                    if(role.title)
+                        p.card-text <b>#{role.title}</b>
+
+        .col-6 
+            .card.mb-4 
+                .card-header Danh mục sản phẩm 
+                .card-body 
+                    p Số lượng: <b>#{statistic.categoryProduct.total}</b>
+                    p Hoạt động: <b>#{statistic.categoryProduct.active}</b>
+                    p Dừng hoạt dộng: <b>#{statistic.categoryProduct.inactive}</b>
+
+        .col-6
+            .card.mb-4 
+                .card-header Sản phẩm 
+                .card-body 
+                    p Số lượng: <b>#{statistic.product.total}</b>
+                    p Hoạt động: <b>#{statistic.product.active}</b>
+                    p Dừng hoạt dộng: <b>#{statistic.product.inactive}</b>
+
+        .col-6  
+            .card.mb-4 
+                .card-header Tài khoản admin
+                .card-body 
+                    p Số lượng: <b>#{statistic.account.total}</b>
+                    p Hoạt động: <b>#{statistic.account.active}</b>
+                    p Dừng hoạt dộng: <b>#{statistic.account.inactive}</b>
+
+        .col-6
+            .card.mb-4 
+                .card-header Người dùng 
+                .card-body 
+                    p Số lượng: <b>#{statistic.user.total}</b>
+                    p Hoạt động: <b>#{statistic.user.active}</b>
+                    p Dừng hoạt dộng: <b>#{statistic.user.inactive}</b>
+
+        .col-6
+            .card.mb-4 
+                .card-header Đơn hàng 
+                .card-body 
+                    p Số lượng: <b>#{statistic.order.total}</b>
+                    p Đang xử lý: <b>#{statistic.order.processing}</b>
+                    p Đã hoàn thành: <b>#{statistic.order.completed}</b>
+                    p Đã hủy: <b>#{statistic.order.cancel}</b>
