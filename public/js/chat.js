@@ -1,4 +1,12 @@
 import * as Popper from 'https://cdn.jsdelivr.net/npm/@popperjs/core@^2/dist/esm/index.js'
+import * as FileUploadWithPreview from 'https://cdn.jsdelivr.net/npm/file-upload-with-preview';
+// file-upload-with-preview
+const upload = new FileUploadWithPreview.FileUploadWithPreview('upload-images', {
+    multiple: true,
+    maxFileCount: 6,
+});
+// END file-upload-with-preview
+
 
 // CLIENT_SEND_MESSAGE
 const formSendData = document.querySelector(".chat .inner-form");
@@ -6,9 +14,15 @@ if(formSendData) {
     formSendData.addEventListener("submit", (e) => {
         e.preventDefault();
         const content = e.target.elements.content.value;
-        if(content){
-            socket.emit("client_send_message", content);
+        const images = upload.cachedFileArray;
+
+        if(content || images.length > 0){
+            socket.emit("client_send_message", {
+                content: content,
+                images: images
+            });
             e.target.elements.content.value = "";
+            upload.resetPreviewPanel();
             socket.emit("client_send_typing", "hidden");
         }
     })
@@ -16,13 +30,15 @@ if(formSendData) {
 // END CLIENT_SEND_MESSAGE
 
 // SERVER_RETURN_MESSAGE
-socket.on("server_send_message", (data) => {
+socket.on("server_return_message", (data) => {
     const myId = document.querySelector("[my-id]").getAttribute("my-id");
     const body = document.querySelector(".chat .inner-body");
     const boxTyping = document.querySelector(".chat .inner-list-typing");
 
     const div = document.createElement("div");
     let htmlFullName = "";
+    let htmlContent = "";
+    let htmlImages = "";
 
     if(myId == data.userId){
         div.classList.add("inner-outgoing");
@@ -31,12 +47,30 @@ socket.on("server_send_message", (data) => {
         div.classList.add("inner-incoming");
     }
 
+    if(data.content){
+        htmlContent = `
+        <div class="inner-content">${data.content}</div>
+        `;
+    }
+
+    if(data.images.length > 0){
+        htmlImages += `<div class="inner-images">`;
+
+        for(const image of data.images){
+            htmlImages += `<img src="${image}"`;
+        }
+
+        htmlImages += `</div>`;
+    }
+
     div.innerHTML = `
         ${htmlFullName}
-        <div class="inner-content">${data.content}</div>
+        ${htmlContent}
+        ${htmlImages}
     `;
 
     body.insertBefore(div, boxTyping);
+
     body.scrollTop = body.scrollHeight;
 });
 // END SERVER_RETURN_MESSAGE
