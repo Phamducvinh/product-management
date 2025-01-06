@@ -9,9 +9,9 @@ block content
             .col-12 
                 +box-head('Lời mời Kết bạn')
 
-        .row 
+        .row(data-users-accept=user.id)
             each user in users
-                .col-6 
+                .col-6(user-id=user.id)
                     div(class="box-user")
                         div(class="inner-avatar")
                             img(

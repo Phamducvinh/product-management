@@ -6,8 +6,8 @@ module.exports = (res) => {
         socket.on("client_add_friend", async (userId) => {
             const myUserId = res.locals.user.id;
 
-            // console.log(myUserId);
-            // console.log(userId);
+            // console.log(myUserId); id của A
+            // console.log(userId); id của B
 
             // thêm id A vào acceptFriends B
             const existIdAinB = await User.findOne({
@@ -37,8 +37,29 @@ module.exports = (res) => {
                     $push: {
                         requestFriends: userId
                     }
-                })
+                });
             }
+            // lấy ra độ dài của acceptFriends của B và trả về A
+            const infoUserB = await User.findOne({
+                _id: userId
+            });
+            const lengthAcceptFriends = infoUserB.acceptFriends.length;
+
+            socket.broadcast.emit("server_return_length_accept_friends", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
+
+            // lấy info của A và trả về B
+            const infoUserA = await User.findOne({
+                _id: myUserId
+            }).select("id avatar fullName");
+
+            socket.broadcast.emit("server_return_info_accept_friends", {
+                userIdB: userId,
+                infoUserA: infoUserA
+            });
+
         });
     });
 
@@ -78,8 +99,25 @@ module.exports = (res) => {
                     $pull: {
                         requestFriends: userId
                     }
-                })
+                });
             }
+            
+            // lấy ra độ dài của acceptFriends của B và trả về A
+            const infoUserB = await User.findOne({
+                _id: userId
+            });
+            const lengthAcceptFriends = infoUserB.acceptFriends.length;
+
+            socket.broadcast.emit("server_return_length_accept_friends", {
+                userId: userId,
+                lengthAcceptFriends: lengthAcceptFriends
+            });
+
+            // lấy id của A trả về B
+            socket.broadcast.emit("server_return_user_id_cancel_friend", {
+                userIdB: userId,
+                userIdA: myUserId
+            });
         });
     });
 
@@ -178,4 +216,17 @@ module.exports = (res) => {
             }
         });
     });
+    // chức năng hiện danh sách đã kết bạn
+    _io.once('connection', (socket) => {
+        socket.on("client_show_list_friend", async (userId) => {
+            const infoUser = await User.findOne({
+                _id: userId
+            }).select("friendList");
+
+            socket.emit("server_return_list_friend", {
+                infoUser: infoUser
+            });
+        });
+    });
+    // chức năng hiện danh sách kết bạn
 }
