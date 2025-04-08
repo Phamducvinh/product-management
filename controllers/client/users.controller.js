@@ -99,7 +99,10 @@ module.exports.friends = async (req, res) => {
         deleted: false,
     }).select("id avatar fullName statusOnline");
 
-    console.log(users);
+    for (const user of users) {
+        const infoFriend = friendList.find(friend => friend.user_id == user.id);
+        user.infoFriend = infoFriend;
+    }
 
     res.render('client/pages/users/friends', {
         pageTitle: 'Danh sách bạn bè',
